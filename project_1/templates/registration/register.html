@@ -2,7 +2,12 @@
 
 {% block content %}
 
-<h1 align="center">Регистрацияя</h1>
+<h1 align="center">Регистрация</h1>
+<div class="shadow p-3 mb-5 bg-white rounded" style="width: 700px;
+  margin: auto;
+  border: 3px solid #73AD21;
+  display: flex;
+  justify-content: center;">
  <form method="post">
     {% csrf_token %}
     {{form.as_p}}
@@ -10,4 +15,5 @@
         Зарегистрироваться
     </button>
 </form>
+</div>
 {% endblock %}

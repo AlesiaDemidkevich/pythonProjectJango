@@ -2,21 +2,21 @@
 
 {% block content %}
 
-<h1 align="center">Вся наша мебель</h1>
+<h1 align="center" class="shadow p-3 mb-5 bg-white rounded" style="margin: 30px 0px 30px 0px">Вся наша мебель</h1>
 
-{% if user.is_authenticated %}
-    {% if mebels %}
+{% if user.is_authenticated and user.username != 'admin'%}
+    {% if page_obj %}
     <div class="row justify-content-center">
         <div class="col-auto">
-            <table class="table table-responsive">
-              <thead>
+            <table class="table">
+              <thead class="thead-light">
                 <tr>
                   <th scope="col">Цена</th>
                   <th scope="col">Описание</th>
                 </tr>
               </thead>
               <tbody>
-                {% for mebel in mebels %}
+                {% for mebel in page_obj %}
                     <tr>
                         <td scope="row">{{mebel.price}}</td>
                         <td><a href={{mebel.link}}>{{mebel.description}}</a></td>
@@ -25,6 +25,90 @@
 
               </tbody>
             </table>
+        </div>
+        <div class="row justify-content-center" style="text-align: center">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" style="margin: 5px">&laquo;</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" style="margin: 5px">&lsaquo; </a>
+                {% endif %}
+
+                <span class="current">
+                    {{ page_obj.number }} ... {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" style="margin: 5px">&rsaquo;</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" style="margin: 5px">&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    {% else %}
+        <h2>К сожалению мебели ещё нету</h2>
+    {% endif %}
+{% elif user.is_authenticated and user.username == 'admin' %}
+     {% if page_obj %}
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Ссылка</th>
+                    <th scope="col">Редактирование</th>
+                    <th scope="col">Удаление</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for mebel in page_obj  %}
+                    <tr>
+                        <td scope="row"><b>{{mebel.id}}</b></td>
+                        <td scope="row">{{mebel.parse_datetime}}</td>
+                        <td scope="row">{{mebel.price}}</td>
+                        <td scope="row">{{mebel.description}}</td>
+                        <td scope="row"><a href={{mebel.link}}>{{mebel.link}}</a></td>
+                        <td scope="row">
+                            <form action="{% url 'update_item' mebel.id %}" method="post">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                            <button type="submit" class="btn btn-success">
+                                Сохранить
+                            </button>
+                            </form>
+                        </td>
+                        <td scope="row">
+                            <form action="{% url 'delete_item' mebel.id %}">
+                            <button type="submit" class="btn btn-danger">
+                                Удалить
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center" style="text-align: center">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" style="margin: 5px">&laquo;</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" style="margin: 5px">&lsaquo; </a>
+                {% endif %}
+
+                <span class="current">
+                    {{ page_obj.number }} ... {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" style="margin: 5px">&rsaquo;</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" style="margin: 5px">&raquo;</a>
+                {% endif %}
+            </span>
         </div>
     </div>
     {% else %}

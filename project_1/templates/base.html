@@ -8,16 +8,26 @@
 </head>
 <body>
 
-<p style="text-align: right">
+<div style="display: flex; justify-content: flex-end">
 {% if user.is_authenticated %}
-    <a class="btn btn-primary btn-sm" href="{% url 'logout' %}">Выйти</a>
+    <form action="{% url 'logout' %}" method="post" style="margin-left: 5px">
+        {% csrf_token %}
+        <b>{{user.username}} |</b>
+        <button class="btn btn-outline-secondary btn-sm" type="submit">Выйти</button>
+    </form>
 {% else %}
 
-    <a class="btn btn-secondary btn-sm" href="{% url 'login' %}">Войти</a>
-    <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Зарегистрироваться</a>
-    {% endif %}
-</p>
+    <form action="{% url 'login' %}" method="post" style="margin-left: 5px">
+        {% csrf_token %}
+        <button class="btn btn-outline-success btn-sm" type="submit">Войти</button>
+    </form>
+    <form action="{% url 'register' %}" method="post" style="margin-left: 5px">
+        {% csrf_token %}
+        <button class="btn btn-outline-success btn-sm" type="submit">Зарегистрироваться</button>
+    </form>
 
+{% endif %}
+</div>
 {% block content %}
 {% endblock %}
 </body>

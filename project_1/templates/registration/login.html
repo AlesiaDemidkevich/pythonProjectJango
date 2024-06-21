@@ -3,12 +3,18 @@
 {% block content %}
 
 <h1 align="center">Вход</h1>
- <form method="post">
+<div class="shadow p-3 mb-5 bg-white rounded" style="width: 400px;
+  margin: auto;
+  border: 3px solid #73AD21;
+  display: flex;
+  justify-content: center;">
+ <form method="post" >
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit" class="btn btn-success">
         Войти
     </button>
 </form>
+</div>
 
 {% endblock %}

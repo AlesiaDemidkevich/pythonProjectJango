@@ -23,9 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+3u_lo^#u5^3*bhi772^9^lxc%b2ig5jmw6+z9t=ina0--=+y0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
@@ -37,13 +40,13 @@ CSRF_COOKIE_SECURE = True
 # Application definition
 
 INSTALLED_APPS = [
+    "app_1.apps.App1Config",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "app_1.apps.App1Config"
+    "django.contrib.staticfiles"
 ]
 
 MIDDLEWARE = [
@@ -142,4 +145,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'show_admin_item'
+LOGIN_REDIRECT_URL = 'show_all'
+LOGOUT_REDIRECT_URL = 'main'
