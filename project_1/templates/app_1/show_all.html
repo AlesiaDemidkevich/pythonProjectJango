@@ -4,30 +4,32 @@
 
 <h1 align="center">Вся наша мебель</h1>
 
-{% if mebels %}
-<div class="row justify-content-center">
-    <div class="col-auto">
-        <table class="table table-responsive">
-          <thead>
-            <tr>
-              <th scope="col">Цена</th>
-              <th scope="col">Описание</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for mebel in mebels %}
+{% if user.is_authenticated %}
+    {% if mebels %}
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <table class="table table-responsive">
+              <thead>
                 <tr>
-                    <td scope="row"><a href={{mebel.link}}>{{mebel.price}}</a></td>
-                    <td>{{mebel.description}}</td>
+                  <th scope="col">Цена</th>
+                  <th scope="col">Описание</th>
                 </tr>
-            {% endfor %}
+              </thead>
+              <tbody>
+                {% for mebel in mebels %}
+                    <tr>
+                        <td scope="row">{{mebel.price}}</td>
+                        <td><a href={{mebel.link}}>{{mebel.description}}</a></td>
+                    </tr>
+                {% endfor %}
 
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+        </div>
     </div>
-</div>
-{% else %}
-    <h2>К сожалению мебели ещё нету</h2>
+    {% else %}
+        <h2>К сожалению мебели ещё нету</h2>
+    {% endif %}
 {% endif %}
 
 {% endblock %}

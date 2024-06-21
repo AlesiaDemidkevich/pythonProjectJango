@@ -7,6 +7,18 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
-{% block content %} {% endblock %}
+
+<p style="text-align: right">
+{% if user.is_authenticated %}
+    <a class="btn btn-primary btn-sm" href="{% url 'logout' %}">Выйти</a>
+{% else %}
+
+    <a class="btn btn-secondary btn-sm" href="{% url 'login' %}">Войти</a>
+    <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Зарегистрироваться</a>
+    {% endif %}
+</p>
+
+{% block content %}
+{% endblock %}
 </body>
 </html>

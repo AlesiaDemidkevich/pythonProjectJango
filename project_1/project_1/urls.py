@@ -20,5 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('app_1/', include('app_1.urls')),
     path("admin/", admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
+
+handler404 = 'app_1.views.page_not_found'
 
